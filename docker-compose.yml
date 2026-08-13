@@ -1,0 +1,11 @@
+services:
+  app:
+    image: serversideup/php:8.4-fpm-nginx
+    container_name: raffle_app
+    restart: unless-stopped
+    ports:
+      - "8083:8080"
+    environment:
+      - PHP_OPCACHE_ENABLE=1
+    volumes:
+      - .:/var/www/html
