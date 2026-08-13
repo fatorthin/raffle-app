@@ -1,58 +1,139 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 🎯 Local Interactive Raffle Engine (Undian Jalan Sehat)
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Aplikasi berbasis web untuk manajemen dan visualisasi pengundian kupon **Jalan Sehat / Raffle Event** berbasis *Offline-First*. Aplikasi ini dirancang murni untuk dijalankan di jaringan lokal (LAN) tanpa ketergantungan koneksi internet, dengan pencegahan duplikasi pemenang secara atomic, fitur multi-winner batch draw, dan efek visual panggung 3D yang memukau untuk penonton di lapangan.
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 🌟 Fitur Utama (Key Features)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- **Dual-Screen Realtime Sync (Single Server, Dual View):**
+  - `/admin` &rarr; Panel kontrol interaktif untuk panitia (akses via laptop/tablet/smartphone admin).
+  - `/display` &rarr; Layar proyektor/LED panggung untuk penonton (akses via browser fullscreen).
+  - Sinkronisasi instan **0ms** menggunakan `BroadcastChannel`, `localStorage` event, serta fallback JSON polling ultra-ringan (`/api/raffle/state` < 2ms).
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- **🎰 60 FPS Casino Jackpot Slot Machine Reel:**
+  - Animasi perputaran gulungan 3D ala kasino 60 FPS (*GPU Hardware-Accelerated* `transform: translateY`) dengan efek *motion blur* dan pengereman *cubic-bezier elastic bounce* saat digit terkunci.
 
-## Learning Laravel
+- **⏱️ Penguncian Digit Bertahap & Setting Kecepatan (Jackpot Speed Control):**
+  - Animasi penguncian per-digit bertahap (Digit 1 &rarr; Digit 2 &rarr; Digit 3 &rarr; Digit 4) disertai bunyi ketukan mekanis.
+  - Opsi Kecepatan Penguncian di Admin Panel: `⚡ Cepat (150ms)`, `🎯 Normal (350ms)`, `🎭 Dramatis (700ms)`, dan `🔥 Super Dramatis (1.2s)`.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- **🔢 Multi-Winner Batch Drawing (1 s/d 5 Pemenang Sekaligus):**
+  - Memungkinkan admin mengundi **1, 2, 3, 4, atau 5 pemenang** secara bersamaan dalam 1 kali putaran (`DB::transaction` atomic).
+  - Tata letak *responsive grid* simetris (maksimal 3 kartu per baris): 4 pemenang tampil 2x2 grid, 5 pemenang tampil 3 top + 2 bottom centered.
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- **📋 MC Monitor Table (Pemenang Terkini & Dianulir):**
+  - Layar `/display` dilengkapi tabel khusus MC di sebelah kanan panggung:
+    - **Pemenang Sah:** Kartu Emas Menyala + Nomor Kupon Emas.
+    - **Pemenang Dianulir:** Kartu Merah + Text Coret (`line-through`) + Badge `🚫 ANULIR`.
+  - Dilengkapi mekanisme *Anti-Spoiler Buffer* (data pemenang baru di-commit ke tabel MC tepat saat animasi gulungan panggung selesai).
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+- **🚫 Anti-Duplicate & Validasi Kuota Atomic:**
+  - Pengecekan otomatis di backend query builder (`Coupon::eligible()`). Kupon yang sudah pernah menang atau dianulir tidak akan diundi kembali.
 
-## Agentic Development
+- **📱 100% Mobile & Touch Friendly:**
+  - Tampilan responsif di smartphone, tablet, laptop, dan layar proyektor panggung.
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+- **🔊 100% Offline Audio Synthesizer & Confetti:**
+  - Efek suara ticking & fanfare kemenangan menggunakan Web Audio API murni (tanpa file audio eksternal) dan `canvas-confetti`.
 
+---
+
+## 🛠️ Tech Stack
+
+- **Backend Framework:** Laravel (PHP 8.2+)
+- **Frontend Engine:** Livewire 3 & Alpine.js
+- **Styling:** Tailwind CSS & Google Fonts (*Outfit*, *Plus Jakarta Sans*, *JetBrains Mono*)
+- **Database:** SQLite (`database/database.sqlite`) - *Offline-First Local Storage*
+- **Build Tool:** Vite
+
+---
+
+## 🗄️ Database Schema
+
+| Table | Column | Type | Modifiers / Description |
+| :--- | :--- | :--- | :--- |
+| **`prizes`** | `id` | BigIncrements | Primary Key |
+| | `name` | String | Nama Hadiah (Contoh: "Sepeda Gunung") |
+| | `quota` | Integer | Total Kuota Hadiah |
+| | `image_path` | String | Nullable (Path foto hadiah) |
+| **`coupons`** | `id` | BigIncrements | Primary Key |
+| | `coupon_number` | String | Unique (Contoh: "JLS-0001") |
+| | `name` | String | Nullable (Nama peserta) |
+| **`winners`** | `id` | BigIncrements | Primary Key |
+| | `coupon_id` | ForeignId | Constrained to `coupons` |
+| | `prize_id` | ForeignId | Constrained to `prizes` |
+| | `status` | Enum | `['valid', 'annulled']` (Default: `valid`) |
+
+---
+
+## 🚀 Panduan Instalasi & Pengoperasian
+
+### Prasyarat System:
+- PHP >= 8.2 (dengan ekstensi `pdo_sqlite` aktif)
+- Composer
+- Node.js & NPM
+
+### Langkah Instalasi:
+
+1. **Clone repository:**
+   ```bash
+   git clone https://github.com/user/raffle-app.git
+   cd raffle-app
+   ```
+
+2. **Install dependensi PHP & Node.js:**
+   ```bash
+   composer install
+   npm install
+   ```
+
+3. **Setup environment & database SQLite:**
+   ```bash
+   cp .env.example .env
+   php artisan key:generate
+   ```
+   *(Pastikan `.env` menggunakan `SESSION_DRIVER=file` dan `CACHE_STORE=file` untuk performa SQLite terbaik)*
+
+4. **Migrasi database & jalankan seeder:**
+   ```bash
+   php artisan migrate:fresh --seed
+   ```
+   *Seeder otomatis memasukkan 15 unit hadiah real & 1.000 kupon peserta (`JLS-0001` s/d `JLS-1000`).*
+
+5. **Build asset frontend:**
+   ```bash
+   npm run build
+   ```
+
+6. **Jalankan server lokal:**
+   ```bash
+   php artisan serve --host=0.0.0.0 --port=8000
+   ```
+
+7. **Akses Aplikasi:**
+   - **Admin Control Panel:** `http://localhost:8000/admin`
+   - **Layar Display Proyektor:** `http://localhost:8000/display`
+
+---
+
+## 🧪 Automated Testing
+
+Aplikasi ini dilengkapi dengan automated test suite lengkap untuk menguji ketersediaan endpoint, flow `RaffleService`, validasi kuota, pengundian batch multi-winner, dan sinkronisasi state.
+
+Jalankan pengujian dengan perintah:
 ```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+php artisan test
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+Hasil Pengujian:
+```text
+Tests:    15 passed (59 assertions)
+Duration: 0.65s
+```
 
-## Contributing
+---
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## 📄 Licences
 
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Aplikasi ini dikembangkan di bawah lisensi MIT.
