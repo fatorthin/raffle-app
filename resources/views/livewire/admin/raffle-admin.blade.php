@@ -23,108 +23,112 @@
 
     <!-- Flash Alert Messages -->
     @if ($successMessage)
-        <div class="flex items-center justify-between p-4 rounded-xl bg-emerald-950/80 border border-emerald-500/40 text-emerald-200 shadow-lg shadow-emerald-950/50 animate-fade-in">
-            <div class="flex items-center space-x-3">
-                <span class="text-xl">✅</span>
-                <span class="text-sm font-semibold">{{ $successMessage }}</span>
+        <div class="flex items-center justify-between p-3 sm:p-4 rounded-xl bg-emerald-950/80 border border-emerald-500/40 text-emerald-200 shadow-lg shadow-emerald-950/50 animate-fade-in gap-2">
+            <div class="flex items-center space-x-2 sm:space-x-3 min-w-0">
+                <span class="text-lg sm:text-xl shrink-0">✅</span>
+                <span class="text-xs sm:text-sm font-semibold truncate">{{ $successMessage }}</span>
             </div>
-            <button wire:click="clearAlerts" class="text-emerald-400 hover:text-emerald-200 text-sm font-bold">&times;</button>
+            <button wire:click="clearAlerts" class="text-emerald-400 hover:text-emerald-200 text-lg sm:text-sm font-bold shrink-0">&times;</button>
         </div>
     @endif
 
     @if ($errorMessage)
-        <div class="flex items-center justify-between p-4 rounded-xl bg-rose-950/80 border border-rose-500/40 text-rose-200 shadow-lg shadow-rose-950/50 animate-fade-in">
-            <div class="flex items-center space-x-3">
-                <span class="text-xl">⚠️</span>
-                <span class="text-sm font-semibold">{{ $errorMessage }}</span>
+        <div class="flex items-center justify-between p-3 sm:p-4 rounded-xl bg-rose-950/80 border border-rose-500/40 text-rose-200 shadow-lg shadow-rose-950/50 animate-fade-in gap-2">
+            <div class="flex items-center space-x-2 sm:space-x-3 min-w-0">
+                <span class="text-lg sm:text-xl shrink-0">⚠️</span>
+                <span class="text-xs sm:text-sm font-semibold truncate">{{ $errorMessage }}</span>
             </div>
-            <button wire:click="clearAlerts" class="text-rose-400 hover:text-rose-200 text-sm font-bold">&times;</button>
+            <button wire:click="clearAlerts" class="text-rose-400 hover:text-rose-200 text-lg sm:text-sm font-bold shrink-0">&times;</button>
         </div>
     @endif
 
     <!-- Metric Stat Cards -->
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3 md:gap-4">
         <!-- Card 1: Eligible Coupons -->
-        <div class="p-4 rounded-2xl bg-slate-900/90 border border-slate-800 shadow-md flex items-center space-x-4">
-            <div class="w-12 h-12 rounded-xl bg-indigo-500/10 border border-indigo-500/30 flex items-center justify-center text-indigo-400 text-2xl font-bold">
+        <div class="p-3 sm:p-4 rounded-2xl bg-slate-900/90 border border-slate-800 shadow-md flex items-center space-x-2 sm:space-x-3">
+            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-indigo-500/10 border border-indigo-500/30 flex items-center justify-center text-indigo-400 text-xl sm:text-2xl font-bold shrink-0">
                 🎟️
             </div>
-            <div>
-                <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Kupon Siap Diundi</p>
-                <div class="flex items-baseline space-x-1.5 mt-0.5">
-                    <span class="text-2xl font-extrabold text-white font-mono-num">{{ number_format($stats['eligible_coupons']) }}</span>
-                    <span class="text-xs text-slate-500">/ {{ number_format($stats['total_coupons']) }}</span>
+            <div class="min-w-0 flex-1">
+                <p class="text-[10px] sm:text-xs font-semibold text-slate-400 uppercase tracking-wider truncate">Kupon Siap Diundi</p>
+                <div class="flex items-baseline space-x-1 sm:space-x-1.5 mt-0.5">
+                    <span class="text-lg sm:text-2xl font-extrabold text-white font-mono-num">{{ number_format($stats['eligible_coupons']) }}</span>
+                    <span class="text-[9px] sm:text-xs text-slate-500 truncate">/ {{ number_format($stats['total_coupons']) }}</span>
                 </div>
             </div>
         </div>
 
         <!-- Card 2: Remaining Prize Quota -->
-        <div class="p-4 rounded-2xl bg-slate-900/90 border border-slate-800 shadow-md flex items-center space-x-4">
-            <div class="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 text-2xl font-bold">
+        <div class="p-3 sm:p-4 rounded-2xl bg-slate-900/90 border border-slate-800 shadow-md flex items-center space-x-2 sm:space-x-3">
+            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 text-xl sm:text-2xl font-bold shrink-0">
                 🎁
             </div>
-            <div>
-                <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Sisa Kuota Hadiah</p>
-                <div class="flex items-baseline space-x-1.5 mt-0.5">
-                    <span class="text-2xl font-extrabold text-amber-400 font-mono-num">{{ number_format($stats['remaining_quota']) }}</span>
-                    <span class="text-xs text-slate-500">/ {{ number_format($stats['total_quota']) }} unit</span>
+            <div class="min-w-0 flex-1">
+                <p class="text-[10px] sm:text-xs font-semibold text-slate-400 uppercase tracking-wider truncate">Sisa Kuota Hadiah</p>
+                <div class="flex items-baseline space-x-1 sm:space-x-1.5 mt-0.5">
+                    <span class="text-lg sm:text-2xl font-extrabold text-amber-400 font-mono-num">{{ number_format($stats['remaining_quota']) }}</span>
+                    <span class="text-[9px] sm:text-xs text-slate-500 truncate">/ {{ number_format($stats['total_quota']) }} unit</span>
                 </div>
             </div>
         </div>
 
         <!-- Card 3: Valid Winners -->
-        <div class="p-4 rounded-2xl bg-slate-900/90 border border-slate-800 shadow-md flex items-center space-x-4">
-            <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 text-2xl font-bold">
+        <div class="p-3 sm:p-4 rounded-2xl bg-slate-900/90 border border-slate-800 shadow-md flex items-center space-x-2 sm:space-x-3">
+            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 text-xl sm:text-2xl font-bold shrink-0">
                 🏆
             </div>
-            <div>
-                <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Pemenang Sah</p>
-                <div class="flex items-baseline space-x-1.5 mt-0.5">
-                    <span class="text-2xl font-extrabold text-emerald-400 font-mono-num">{{ number_format($stats['valid_winners']) }}</span>
-                    <span class="text-xs text-slate-500">pemenang</span>
+            <div class="min-w-0 flex-1">
+                <p class="text-[10px] sm:text-xs font-semibold text-slate-400 uppercase tracking-wider truncate">Pemenang Sah</p>
+                <div class="flex items-baseline space-x-1 sm:space-x-1.5 mt-0.5">
+                    <span class="text-lg sm:text-2xl font-extrabold text-emerald-400 font-mono-num">{{ number_format($stats['valid_winners']) }}</span>
+                    <span class="text-[9px] sm:text-xs text-slate-500 truncate">pemenang</span>
                 </div>
             </div>
         </div>
 
         <!-- Card 4: Annulled / Burnt -->
-        <div class="p-4 rounded-2xl bg-slate-900/90 border border-slate-800 shadow-md flex items-center space-x-4">
-            <div class="w-12 h-12 rounded-xl bg-rose-500/10 border border-rose-500/30 flex items-center justify-center text-rose-400 text-2xl font-bold">
+        <div class="p-3 sm:p-4 rounded-2xl bg-slate-900/90 border border-slate-800 shadow-md flex items-center space-x-2 sm:space-x-3">
+            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-rose-500/10 border border-rose-500/30 flex items-center justify-center text-rose-400 text-xl sm:text-2xl font-bold shrink-0">
                 🚫
             </div>
-            <div>
-                <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Kupon Dianulir</p>
-                <div class="flex items-baseline space-x-1.5 mt-0.5">
-                    <span class="text-2xl font-extrabold text-rose-400 font-mono-num">{{ number_format($stats['annulled_winners']) }}</span>
-                    <span class="text-xs text-slate-500">hangus</span>
+            <div class="min-w-0 flex-1">
+                <p class="text-[10px] sm:text-xs font-semibold text-slate-400 uppercase tracking-wider truncate">Kupon Dianulir</p>
+                <div class="flex items-baseline space-x-1 sm:space-x-1.5 mt-0.5">
+                    <span class="text-lg sm:text-2xl font-extrabold text-rose-400 font-mono-num">{{ number_format($stats['annulled_winners']) }}</span>
+                    <span class="text-[9px] sm:text-xs text-slate-500 truncate">hangus</span>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- Navigation Tabs -->
-    <div class="border-b border-slate-800/80 flex items-center space-x-2 overflow-x-auto pb-1">
+    <div class="border-b border-slate-800/80 flex items-center space-x-1 sm:space-x-2 overflow-x-auto pb-1 -mx-6 sm:mx-0 px-6 sm:px-0 scrollbar-hide">
         <button wire:click="setTab('raffle')"
-                class="px-4 py-2.5 rounded-xl font-bold text-sm flex items-center space-x-2 transition-all {{ $activeTab === 'raffle' ? 'bg-gradient-to-r from-amber-500 to-yellow-400 text-slate-950 shadow-lg shadow-amber-500/20' : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60' }}">
+                class="px-2.5 sm:px-4 py-2 sm:py-2.5 rounded-lg sm:rounded-xl font-bold text-xs sm:text-sm flex items-center space-x-1 sm:space-x-2 transition-all whitespace-nowrap {{ $activeTab === 'raffle' ? 'bg-gradient-to-r from-amber-500 to-yellow-400 text-slate-950 shadow-lg shadow-amber-500/20' : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60' }}">
             <span>🎯</span>
-            <span>Raffle Controller</span>
+            <span class="hidden sm:inline">Raffle Controller</span>
+            <span class="sm:hidden">Raffle</span>
         </button>
         <button wire:click="setTab('winners')"
-                class="px-4 py-2.5 rounded-xl font-bold text-sm flex items-center space-x-2 transition-all {{ $activeTab === 'winners' ? 'bg-gradient-to-r from-amber-500 to-yellow-400 text-slate-950 shadow-lg shadow-amber-500/20' : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60' }}">
+                class="px-2.5 sm:px-4 py-2 sm:py-2.5 rounded-lg sm:rounded-xl font-bold text-xs sm:text-sm flex items-center space-x-1 sm:space-x-2 transition-all whitespace-nowrap {{ $activeTab === 'winners' ? 'bg-gradient-to-r from-amber-500 to-yellow-400 text-slate-950 shadow-lg shadow-amber-500/20' : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60' }}">
             <span>🏆</span>
-            <span>Daftar Pemenang</span>
-            <span class="px-2 py-0.5 rounded-full text-xs {{ $activeTab === 'winners' ? 'bg-slate-950/30 text-slate-950' : 'bg-slate-800 text-slate-300' }}">{{ $stats['valid_winners'] }}</span>
+            <span class="hidden sm:inline">Daftar Pemenang</span>
+            <span class="sm:hidden">Pemenang</span>
+            <span class="px-1.5 py-0.5 rounded-full text-[10px] sm:text-xs {{ $activeTab === 'winners' ? 'bg-slate-950/30 text-slate-950' : 'bg-slate-800 text-slate-300' }}">{{ $stats['valid_winners'] }}</span>
         </button>
         <button wire:click="setTab('prizes')"
-                class="px-4 py-2.5 rounded-xl font-bold text-sm flex items-center space-x-2 transition-all {{ $activeTab === 'prizes' ? 'bg-gradient-to-r from-amber-500 to-yellow-400 text-slate-950 shadow-lg shadow-amber-500/20' : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60' }}">
+                class="px-2.5 sm:px-4 py-2 sm:py-2.5 rounded-lg sm:rounded-xl font-bold text-xs sm:text-sm flex items-center space-x-1 sm:space-x-2 transition-all whitespace-nowrap {{ $activeTab === 'prizes' ? 'bg-gradient-to-r from-amber-500 to-yellow-400 text-slate-950 shadow-lg shadow-amber-500/20' : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60' }}">
             <span>🎁</span>
-            <span>Manajemen Hadiah</span>
-            <span class="px-2 py-0.5 rounded-full text-xs {{ $activeTab === 'prizes' ? 'bg-slate-950/30 text-slate-950' : 'bg-slate-800 text-slate-300' }}">{{ $stats['total_prizes'] }}</span>
+            <span class="hidden sm:inline">Manajemen Hadiah</span>
+            <span class="sm:hidden">Hadiah</span>
+            <span class="px-1.5 py-0.5 rounded-full text-[10px] sm:text-xs {{ $activeTab === 'prizes' ? 'bg-slate-950/30 text-slate-950' : 'bg-slate-800 text-slate-300' }}">{{ $stats['total_prizes'] }}</span>
         </button>
         <button wire:click="setTab('coupons')"
-                class="px-4 py-2.5 rounded-xl font-bold text-sm flex items-center space-x-2 transition-all {{ $activeTab === 'coupons' ? 'bg-gradient-to-r from-amber-500 to-yellow-400 text-slate-950 shadow-lg shadow-amber-500/20' : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60' }}">
+                class="px-2.5 sm:px-4 py-2 sm:py-2.5 rounded-lg sm:rounded-xl font-bold text-xs sm:text-sm flex items-center space-x-1 sm:space-x-2 transition-all whitespace-nowrap {{ $activeTab === 'coupons' ? 'bg-gradient-to-r from-amber-500 to-yellow-400 text-slate-950 shadow-lg shadow-amber-500/20' : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60' }}">
             <span>🎟️</span>
-            <span>Manajemen Kupon</span>
-            <span class="px-2 py-0.5 rounded-full text-xs {{ $activeTab === 'coupons' ? 'bg-slate-950/30 text-slate-950' : 'bg-slate-800 text-slate-300' }}">{{ number_format($stats['total_coupons']) }}</span>
+            <span class="hidden sm:inline">Manajemen Kupon</span>
+            <span class="sm:hidden">Kupon</span>
+            <span class="px-1.5 py-0.5 rounded-full text-[10px] sm:text-xs {{ $activeTab === 'coupons' ? 'bg-slate-950/30 text-slate-950' : 'bg-slate-800 text-slate-300' }}">{{ number_format($stats['total_coupons']) }}</span>
         </button>
     </div>
 
