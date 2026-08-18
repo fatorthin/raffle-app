@@ -59,7 +59,7 @@
                             </span>
                         </div>
                         <p class="text-[10px] sm:text-xs text-slate-400 hidden sm:block">Offline-First Local Raffle
-                            Engine</p>
+                            Engines</p>
                     </div>
                 </div>
 
