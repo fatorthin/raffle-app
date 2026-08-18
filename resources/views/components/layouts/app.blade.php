@@ -51,7 +51,7 @@
                         <div class="flex items-center space-x-1.5 sm:space-x-2 flex-wrap">
                             <span
                                 class="font-black tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-yellow-200 to-amber-500 text-xs sm:text-base md:text-lg uppercase truncate">
-                                Undian Jalan Sehat
+                                Undian Jalan Sehat Sekali
                             </span>
                             <span
                                 class="text-[10px] sm:text-xs px-1.5 sm:px-2 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 font-semibold border border-indigo-500/30 whitespace-nowrap">
