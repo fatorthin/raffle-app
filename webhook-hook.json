@@ -1,0 +1,30 @@
+{
+  "id": "raffle-app-deploy",
+  "execute-command": "/DATA/AppData/raffle-app/deploy.sh",
+  "command-working-directory": "/DATA/AppData/raffle-app",
+  "response-message": "Deploying raffle-app...",
+  "trigger-rule": {
+    "and": [
+      {
+        "match": {
+          "type": "payload-hmac-sha256",
+          "secret": "GANTI_DENGAN_WEBHOOK_SECRET_ANDA",
+          "parameter": {
+            "type": "header",
+            "name": "X-Hub-Signature-256"
+          }
+        }
+      },
+      {
+        "match": {
+          "type": "value",
+          "value": "refs/heads/main",
+          "parameter": {
+            "type": "payload",
+            "name": "ref"
+          }
+        }
+      }
+    ]
+  }
+}
